@@ -3,7 +3,8 @@ import os
 import glob
 import subprocess
 import matplotlib.pyplot as plt
-
+import pandas as pd
+import seaborn as sns
 # Directory containing spades_results
 spades_dir = 'spades_results'
 
@@ -60,14 +61,14 @@ import matplotlib.pyplot as plt
 spades_dir = 'spades_results'
 
 # Find all GFA files recursively (including assembly_graph_after_simplification.gfa)
-gfa_files = glob.glob(os.path.join(spades_dir, '**', '*after_simplification.gfa'), recursive=True)
+gfa_files = glob.glob(os.path.join(spades_dir, '**', '*.gfa'), recursive=True)
 
 # Main processing loop
 for gfa_file in gfa_files:
 	try:
 		result = subprocess.run(['gfastats', gfa_file], capture_output=True, text=True, check=True)
 		graph_stats = parse_gfastats_output(result.stdout)
-		scaffolds = os.path.join(os.path.dirname(gfa_file), 'scaffolds.fasta')
+		scaffolds = os.path.join(os.path.dirname(gfa_file), 'contigs.fa')
 		result = subprocess.run(['gfastats', scaffolds], capture_output=True, text=True, check=True)
 		scaff_stats = parse_gfastats_output(result.stdout)
 		# If any value of graph_stats is 0 or None, update from scaff_stats
@@ -112,6 +113,27 @@ plt.tight_layout()
 plt.savefig('contigs_vs_bubbles.png')
 plt.close()
 # output all the stats as a table. 
-import pandas as pd
 df = pd.DataFrame(all_stats)
 df.to_csv('assembly_stats.csv', index=False)
+# Drop columns base_composition_(a 
+df = df.loc[:, ~df.columns.str.startswith('base_composition_')]
+
+# Clean up columns that aren’t purely numeric (like base_composition)
+df_numeric = df.apply(pd.to_numeric, errors="coerce")
+
+# Compute correlations (default: Pearson)
+# Skip columns that start with gap 
+df_numeric = df_numeric.loc[:, ~df_numeric.columns.str.startswith('gap_')]
+
+corr = df_numeric.corr()
+
+# Display correlation table
+print(corr)
+
+# Plot heatmap
+
+plt.figure(figsize=(15, 12))
+sns.heatmap(corr, annot=False, cmap="coolwarm", center=0)
+plt.title("Correlation between Assembly Metrics", fontsize=16)
+plt.savefig('correlation_heatmap.png')
+plt.close()
