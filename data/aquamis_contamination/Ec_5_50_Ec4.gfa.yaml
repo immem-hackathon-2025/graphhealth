@@ -1,0 +1,44 @@
++++Assembly summary+++: 
+Number of scaffolds: 2150
+Total scaffold length: 9949437
+Average scaffold length: 4627.65
+Scaffold N50: 10208
+Scaffold auN: 13461.70
+Scaffold L50: 272
+Largest scaffold: 48084
+Smallest scaffold: 128
+Number of contigs: 3422
+Total contig length: 9949437
+Average contig length: 2907.49
+Contig N50: 7492
+Contig auN: 10172.83
+Contig L50: 369
+Largest contig: 45471
+Smallest contig: 128
+Number of gaps in scaffolds: 0
+Total gap length in scaffolds: 0
+Average gap length in scaffolds: 0.00
+Gap N50 in scaffolds: 0
+Gap auN in scaffolds: 0.00
+Gap L50 in scaffolds: 0
+Largest gap in scaffolds: 0
+Smallest gap in scaffolds: 0
+Base composition (A:C:G:T): 2461364:2514403:2507164:2466506
+GC content %: 50.47
+Number of soft-masked bases: 0
+Number of segments: 3317
+Total segment length: 9933858
+Average segment length: 2994.83
+Number of gaps: 0
+Number of paths: 2150
+Number of edges: 3348
+Average degree: 1.01
+Number of connected components: 118
+Largest connected component length: 1797965
+Number of dead ends: 1634
+Number of disconnected components: 356
+Total length disconnected components: 1906808
+Number of separated components: 474
+Number of bubbles: 173
+Number of circular segments: 2
+Number of circular paths: 1
